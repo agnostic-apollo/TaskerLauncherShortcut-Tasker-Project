@@ -1,0 +1,3010 @@
+<TaskerData sr="" dvi="1" tv="5.9.3.beta.5">
+	<Project sr="proj0" ve="2">
+		<cdate>1589558550116</cdate>
+		<name>TaskerLauncherShortcut</name>
+		<tids>901,874,958,925,955</tids>
+		<Share sr="Share">
+			<d>A project to start launcher shortcuts using the TaskerLauncherShortcut plugin.</d>
+			<p>false</p>
+			<t></t>
+		</Share>
+	</Project>
+	<Task sr="task874">
+		<cdate>1588617967656</cdate>
+		<edate>1589585388295</edate>
+		<id>874</id>
+		<nme>Get And Set Default Launcher</nme>
+		<pri>100</pri>
+		<rty>2</rty>
+		<Action sr="act0" ve="7">
+			<code>300</code>
+			<label>A helper task that gets or sets the default android launcher app with commands. It requires either root or adb. If you don't have either of those, then it is not possible to set the default launcher with background commands, other than tasker being set the device owner (not device admin) but that way has some issues that need to be sorted out. The mode is automatically chosen depending on whatever is available in the order "root, adb". If none of them is detected, then the task exits with failure.
+
+The action passed to this task as %par1 must be set to either "get" or "set". If no parameter is passed, then "get" is automatically assumed.
+
+The "get" action can be used to get the normal_default_launcher_package_and_activity_name for the "Send Shortcut Intent With TaskerLauncherShortcut" task. If this task is run directly without any parameters, then it automatically copies the current default launcher to the clipboard.
+
+
+Input %par1: #optional
+"
+action
+"
+
+Returns:
+"
+launcher_package_and_activity_name/result_code #depending on action
+"
+
+If action is "get" and task is successful, then launcher_package_and_activity_name will contain the default launcher package and activity name.
+Otherwise result will not be set.
+
+If action is "set" and task is successful, then result_code will contain the "0".
+Otherwise it will contain "1".
+
+For other cases, result will not be set.</label>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%task_name</Str>
+			<Str sr="arg1" ve="3">Get And Set Default Launcher</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>37</code>
+			<label>If tasker has root access</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%has_root</lhs>
+					<op>0</op>
+					<rhs>true</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act11" ve="7">
+			<code>123</code>
+			<se>false</se>
+			<Str sr="arg0" ve="3">cmd shortcut get-default-launcher</Str>
+			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="1"/>
+			<Str sr="arg3" ve="3">%launcher_package_and_activity_name</Str>
+			<Str sr="arg4" ve="3">%errors</Str>
+			<Str sr="arg5" ve="3"/>
+		</Action>
+		<Action sr="act12" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%errors</Str>
+			<Str sr="arg1" ve="3">output = 
+"
+%launcher_package_and_activity_name
+"
+
+errors = 
+"
+%errors
+"
+
+exit_code = "%err"</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+			<ConditionList sr="if">
+				<bool0>Or</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%errors</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act13" ve="7">
+			<code>43</code>
+			<label>If tasker has adb access</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%has_adb_wifi</lhs>
+					<op>0</op>
+					<rhs>true</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act14" ve="7">
+			<code>375</code>
+			<se>false</se>
+			<Bundle sr="arg0">
+				<Vals sr="val">
+					<net.dinglisch.android.tasker.RELEVANT_VARIABLES>&lt;StringArray sr=""&gt;&lt;_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES0&gt;%aw_output
+Output
+Output resulting from the command. May be empty.&lt;/_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES0&gt;&lt;/StringArray&gt;</net.dinglisch.android.tasker.RELEVANT_VARIABLES>
+					<net.dinglisch.android.tasker.RELEVANT_VARIABLES-type>[Ljava.lang.String;</net.dinglisch.android.tasker.RELEVANT_VARIABLES-type>
+				</Vals>
+			</Bundle>
+			<Str sr="arg1" ve="3">cmd shortcut get-default-launcher</Str>
+			<Str sr="arg2" ve="3"/>
+			<Str sr="arg3" ve="3"/>
+			<Int sr="arg4" val="10"/>
+			<Int sr="arg5" val="0"/>
+		</Action>
+		<Action sr="act15" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%errors</Str>
+			<Str sr="arg1" ve="3">output = 
+"
+%aw_output
+"
+
+errors = 
+"
+%errmsg
+"
+
+exit_code = "%err"</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+			<ConditionList sr="if">
+				<bool0>Or</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%errmsg</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act16" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%launcher_package_and_activity_name</Str>
+			<Str sr="arg1" ve="3">%aw_output</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act17" ve="7">
+			<code>43</code>
+		</Action>
+		<Action sr="act18" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">"%task_name" task requires root or adb access</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act19" ve="7">
+			<code>137</code>
+			<label>Return nothing</label>
+			<Int sr="arg0" val="0"/>
+			<Str sr="arg1" ve="3"/>
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%action</Str>
+			<Str sr="arg1" ve="3">%par1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act20" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act21" ve="7">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%errors</lhs>
+					<op>12</op>
+					<rhs>\%err
+\%errmsg</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act22" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">Failed To Get Current Default Launcher With cmd Command
+
+%errors</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act23" ve="7">
+			<code>137</code>
+			<label>Return nothing</label>
+			<Int sr="arg0" val="0"/>
+			<Str sr="arg1" ve="3"/>
+		</Action>
+		<Action sr="act24" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act25" ve="7">
+			<code>598</code>
+			<Str sr="arg0" ve="3">%launcher_package_and_activity_name</Str>
+			<Str sr="arg1" ve="3">(?s).*ComponentInfo\{(.*)\}.*</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Str sr="arg5" ve="3"/>
+			<Int sr="arg6" val="1"/>
+			<Str sr="arg7" ve="3">$1</Str>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%launcher_package_and_activity_name</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act26" ve="7">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%par1</lhs>
+					<op>0</op>
+					<rhs>\%par1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act27" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">"%launcher_package_and_activity_name"
+
+%errors</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+		<Action sr="act28" ve="7">
+			<code>105</code>
+			<Str sr="arg0" ve="3">%launcher_package_and_activity_name</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+		<Action sr="act29" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%action</Str>
+			<Str sr="arg1" ve="3">get</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%par1</lhs>
+					<op>0</op>
+					<rhs>\%par1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act30" ve="7">
+			<code>126</code>
+			<Str sr="arg0" ve="3">%launcher_package_and_activity_name</Str>
+			<Int sr="arg1" val="1"/>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Str sr="arg4" ve="3"/>
+		</Action>
+		<Action sr="act31" ve="7">
+			<code>43</code>
+			<label>If action is set to "set"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%action</lhs>
+					<op>0</op>
+					<rhs>set</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act32" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%valid_android_package_and_activity_name_regex</Str>
+			<Str sr="arg1" ve="3">^((?:[A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*)/((?:\.)?\p{javaJavaIdentifierStart}\p{javaJavaIdentifierPart}*(?:\.\p{javaJavaIdentifierStart}\p{javaJavaIdentifierPart}*)*)$</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act33" ve="7">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%launcher_package_and_activity_name</lhs>
+					<op>5</op>
+					<rhs>%valid_android_package_and_activity_name_regex</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act34" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">Invalid launcher_package_and_activity_name = "%launcher_package_and_activity_name"
+%task_name Failed</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act35" ve="7">
+			<code>126</code>
+			<Str sr="arg0" ve="3">1</Str>
+			<Int sr="arg1" val="1"/>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Str sr="arg4" ve="3"/>
+		</Action>
+		<Action sr="act36" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act37" ve="7">
+			<code>300</code>
+			<label>Set current default launcher to launcher_package_and_activity_name</label>
+		</Action>
+		<Action sr="act38" ve="7">
+			<code>549</code>
+			<Str sr="arg0" ve="3">%errors</Str>
+			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+		</Action>
+		<Action sr="act39" ve="7">
+			<code>598</code>
+			<label>replace all single quotes (') with ('\'')</label>
+			<Str sr="arg0" ve="3">%launcher_package_and_activity_name</Str>
+			<Str sr="arg1" ve="3">'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="1"/>
+			<Int sr="arg4" val="0"/>
+			<Str sr="arg5" ve="3"/>
+			<Int sr="arg6" val="1"/>
+			<Str sr="arg7" ve="3">'\\''</Str>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%launcher_package_and_activity_name</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act4" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%launcher_package_and_activity_name</Str>
+			<Str sr="arg1" ve="3">%par2</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act40" ve="7">
+			<code>37</code>
+			<label>If tasker has root access</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%has_root</lhs>
+					<op>0</op>
+					<rhs>true</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act41" ve="7">
+			<code>123</code>
+			<se>false</se>
+			<Str sr="arg0" ve="3">cmd package set-home-activity '%launcher_package_and_activity_name'</Str>
+			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="1"/>
+			<Str sr="arg3" ve="3">%output</Str>
+			<Str sr="arg4" ve="3">%errors</Str>
+			<Str sr="arg5" ve="3"/>
+		</Action>
+		<Action sr="act42" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%errors</Str>
+			<Str sr="arg1" ve="3">output = 
+"
+%output
+"
+
+errors = 
+"
+%errors
+"
+
+exit_code = "%err"</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+			<ConditionList sr="if">
+				<bool0>Or</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%errors</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act43" ve="7">
+			<code>43</code>
+			<label>If tasker has adb access</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%has_adb_wifi</lhs>
+					<op>0</op>
+					<rhs>true</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act44" ve="7">
+			<code>375</code>
+			<se>false</se>
+			<Bundle sr="arg0">
+				<Vals sr="val">
+					<net.dinglisch.android.tasker.RELEVANT_VARIABLES>&lt;StringArray sr=""&gt;&lt;_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES0&gt;%aw_output
+Output
+Output resulting from the command. May be empty.&lt;/_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES0&gt;&lt;/StringArray&gt;</net.dinglisch.android.tasker.RELEVANT_VARIABLES>
+					<net.dinglisch.android.tasker.RELEVANT_VARIABLES-type>[Ljava.lang.String;</net.dinglisch.android.tasker.RELEVANT_VARIABLES-type>
+				</Vals>
+			</Bundle>
+			<Str sr="arg1" ve="3">cmd package set-home-activity '%launcher_package_and_activity_name'</Str>
+			<Str sr="arg2" ve="3"/>
+			<Str sr="arg3" ve="3"/>
+			<Int sr="arg4" val="10"/>
+			<Int sr="arg5" val="0"/>
+		</Action>
+		<Action sr="act45" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%errors</Str>
+			<Str sr="arg1" ve="3">output = 
+"
+%aw_output
+"
+
+errors = 
+"
+%errmsg
+"
+
+exit_code = "%err"</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+			<ConditionList sr="if">
+				<bool0>Or</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%errmsg</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act46" ve="7">
+			<code>43</code>
+		</Action>
+		<Action sr="act47" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">"%task_name" task requires root or adb access</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act48" ve="7">
+			<code>126</code>
+			<Str sr="arg0" ve="3">1</Str>
+			<Int sr="arg1" val="1"/>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Str sr="arg4" ve="3"/>
+		</Action>
+		<Action sr="act49" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act5" ve="7">
+			<code>365</code>
+			<Bundle sr="arg0">
+				<Vals sr="val">
+					<net.dinglisch.android.tasker.RELEVANT_VARIABLES>&lt;StringArray sr=""&gt;&lt;_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES0&gt;%has_root
+Root Access
+&lt;/_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES0&gt;&lt;/StringArray&gt;</net.dinglisch.android.tasker.RELEVANT_VARIABLES>
+					<net.dinglisch.android.tasker.RELEVANT_VARIABLES-type>[Ljava.lang.String;</net.dinglisch.android.tasker.RELEVANT_VARIABLES-type>
+				</Vals>
+			</Bundle>
+			<Str sr="arg1" ve="3">CheckRoot()</Str>
+		</Action>
+		<Action sr="act50" ve="7">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%errors</lhs>
+					<op>12</op>
+					<rhs>\%err
+\%errmsg</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act51" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">Failed To Set Current Default Launcher To "%launcher_package_and_activity_name" With cmd Command
+
+output =
+"
+%output
+"
+
+%errors</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act52" ve="7">
+			<code>126</code>
+			<Str sr="arg0" ve="3">1</Str>
+			<Int sr="arg1" val="1"/>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Str sr="arg4" ve="3"/>
+		</Action>
+		<Action sr="act53" ve="7">
+			<code>43</code>
+		</Action>
+		<Action sr="act54" ve="7">
+			<code>126</code>
+			<Str sr="arg0" ve="3">0</Str>
+			<Int sr="arg1" val="1"/>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Str sr="arg4" ve="3"/>
+		</Action>
+		<Action sr="act55" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act56" ve="7">
+			<code>43</code>
+		</Action>
+		<Action sr="act57" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">Invalid action "%action" passed to "%task_name" task</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+		<Action sr="act58" ve="7">
+			<code>137</code>
+			<label>Return nothing</label>
+			<Int sr="arg0" val="0"/>
+			<Str sr="arg1" ve="3"/>
+		</Action>
+		<Action sr="act59" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act6" ve="7">
+			<code>365</code>
+			<Bundle sr="arg0">
+				<Vals sr="val">
+					<net.dinglisch.android.tasker.RELEVANT_VARIABLES>&lt;StringArray sr=""&gt;&lt;_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES0&gt;%has_adb_wifi
+ADB Wifi Access
+&lt;/_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES0&gt;&lt;/StringArray&gt;</net.dinglisch.android.tasker.RELEVANT_VARIABLES>
+					<net.dinglisch.android.tasker.RELEVANT_VARIABLES-type>[Ljava.lang.String;</net.dinglisch.android.tasker.RELEVANT_VARIABLES-type>
+				</Vals>
+			</Bundle>
+			<Str sr="arg1" ve="3">CheckADBWifi()</Str>
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>37</code>
+			<label>If action is set to "get"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%action</lhs>
+					<op>0</op>
+					<rhs>get</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act8" ve="7">
+			<code>300</code>
+			<label>Get current default launcher package and activity name</label>
+		</Action>
+		<Action sr="act9" ve="7">
+			<code>549</code>
+			<Str sr="arg0" ve="3">%errors</Str>
+			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+		</Action>
+	</Task>
+	<Task sr="task901">
+		<cdate>1588401264372</cdate>
+		<edate>1589648176765</edate>
+		<id>901</id>
+		<nme>Get Intent Info From Intent Uri</nme>
+		<pri>100</pri>
+		<rty>2</rty>
+		<Share sr="Share">
+			<d>A task that converts an intent Uri back to an intent and gets all its info. The task also dynamically generates an "am start" command for the intent so that it may be run with a shell, like with the "Run Shell" action.</d>
+			<p>false</p>
+			<t></t>
+		</Share>
+		<Action sr="act0" ve="7">
+			<code>300</code>
+			<label>A task that converts an intent Uri back to an intent and gets all its info. The task also dynamically generates an "am start" command for the intent so that it may be run with a shell, like with the "Run Shell" action.
+
+Intents for shortcuts are normally stored as Uri strings by launcher apps by running the "Intent.toUri()" function on the intent passed by the apps to them when the shortcut is first created. This Uri can be converted back to an intent by running the "Intent.getIntent(String)" function on the Uri string. For example in nova launcher, the shortcut intent Uris are stored in "/data/data/com.teslacoilsw.launcher/databases/launcher.db" -&gt; "favorites" table. It would require root to access such data.
+
+The implementation of "Intent.toUri()" is found at the following link:
+https://github.com/aosp-mirror/platform_frameworks_base/blob/nougat-release/core/java/android/content/Intent.java#L8433
+
+The implementation of "Intent.getIntent(String)" is found at the following link:
+https://github.com/aosp-mirror/platform_frameworks_base/blob/nougat-release/core/java/android/content/Intent.java#L4982
+
+The intent can normally be run by the "Shortcut" action by passing it the intent Uri.
+
+The intent can also be run by running "CONTEXT.startActivity(Intent)" on the intent object returned by the "Intent.getIntent(String)" function. You may optionally override the flags and other data of the intent depending on your needs. There are 3 disabled actions after the "Convert Intent Uri To Intent Object" anchor that shows how to do it.
+
+However, in some cases a user would like to understand how exactly an intent works so he may modify it for other use cases or maybe he wants to run the same intent with an am command using a shell instead of using java. This task was mainly created for that purpose. This task extracts info from an intent object created from an intent uri which may include its action, type, scheme, package, component, flags, category and extras. The extra keys in the intent uri begin with a prefix which define the type of the extra. "S." -&gt; String, "B." -&gt; Boolean, "b." -&gt; Byte, "c." -&gt; Char, "d." -&gt; Double, "f." -&gt; Float, "i." -&gt; Integer, "l." -&gt; Long, "s." -&gt; Short. Other types are not supported, like Uri and lists. Intent sourceBounds and selector are not extracted by this task since there are not needed for background commands. Using this info an am command is dynamically generated for the user so that the it can be run using a shell, like with the "Run Shell" action.
+
+With the intent info, the user can technically do at least 2 things. Either use the "Send Intent" action or use the am command to send the intent. Both have their drawbacks and benefits.
+
+The "Send Intent" action only allows a maximum of 3 extras, but according to tasker docs, those extras can be type casted to more types than the am command supports, mainly the type double, char, byte and short which the am command does not support. However, flags or multiple categories can't be sent with the "Send Intent" action.
+
+The am command supports extras of type string, bool, int, long and float. It also support multiple extras and categories.
+
+So depending on the use case of the user, he can use either since neither is "one to rule them all". Using java actions would be.
+
+For more info on intents, check the following links:
+
+https://developer.android.com/reference/android/content/Intent
+
+https://tasker.joaoapps.com/userguide/en/intents.html
+
+
+To use this task, set the required variables in the "Set User Modifiable Variables*" section of this task.
+
+The intent_uri variable should be set to the intent Uri whose info needs to be extracted, like a shortcut intent. It can optionally be passed as %par1 which will override the variable set action. Default value is reddit app shortcut.
+
+The copy_intent_info_to_clipboard is a toggle that decides if the intent info should be copied to the clipboard. Default value is "1".
+
+The run_am_start_command is a toggle that decides whether the "am start" command that is dynamically generated should be run at the end of this task. Default value is "1".
+
+The override_am_command_flags_value is a toggle that decides whether the flag stored in the intent should be overridden by the value "335544320" when the "am start" command is generated. The flag value "335544320 (0x14000000)" is basically an OR of "FLAG_ACTIVITY_NEW_TASK 268435456 (0x10000000)" and "FLAG_ACTIVITY_CLEAR_TOP 67108864 (0x04000000)". It is needed to create another activity stack when the new activity is started, like when you want to start a new app. The tasker `Shortcut` action also sends the same flags and ignores the one in the intent uri, at least in my minimal testing. Default value is "1".
+
+The am command generated may not work for all cases. If an extra is null or of a type not supported by the am command, then a warning is flashed and intent will not be sent. Any parameters that need to be passed to the am command that contain a single quote are automatically escaped.
+
+
+Input %par1: #optional
+"
+intent_uri
+"
+
+Returns:
+"
+intent_info
+"
+
+If task is successful, then intent_info will contain the intent info and am command.
+Otherwise it will not be set.</label>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%task_name</Str>
+			<Str sr="arg1" ve="3">Get Intent Info From Intent Uri</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>37</code>
+			<label>If %par1 is passed</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%par1</lhs>
+					<op>1</op>
+					<rhs>\%par1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act100" ve="7">
+			<code>547</code>
+			<label>Append " -c '%intent_category_escaped'" to am_start_command</label>
+			<Str sr="arg0" ve="3">%am_start_command</Str>
+			<Str sr="arg1" ve="3"> -c '%intent_category_escaped'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act101" ve="7">
+			<code>135</code>
+			<Int sr="arg0" val="1"/>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3">Check if intent_categories_set_iterator has next</Str>
+		</Action>
+		<Action sr="act102" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act103" ve="7">
+			<code>598</code>
+			<Str sr="arg0" ve="3">%intent_info</Str>
+			<Str sr="arg1" ve="3">,$</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="1"/>
+			<Int sr="arg4" val="0"/>
+			<Str sr="arg5" ve="3"/>
+			<Int sr="arg6" val="1"/>
+			<Str sr="arg7" ve="3"/>
+		</Action>
+		<Action sr="act104" ve="7">
+			<code>300</code>
+			<label>Get Intent Categories End</label>
+		</Action>
+		<Action sr="act105" ve="7">
+			<code>300</code>
+			<label>Get Intent Extras Start</label>
+		</Action>
+		<Action sr="act106" ve="7">
+			<code>664</code>
+			<Str sr="arg0" ve="3">intent_extras</Str>
+			<Str sr="arg1" ve="3">intent</Str>
+			<Str sr="arg2" ve="3">getExtras
+{Bundle} ()</Str>
+			<Str sr="arg3" ve="3">%intent_action_pick_activity</Str>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act107" ve="7">
+			<code>664</code>
+			<se>false</se>
+			<Str sr="arg0" ve="3">(Set&lt;String&gt;) intent_extras_set</Str>
+			<Str sr="arg1" ve="3">intent_extras</Str>
+			<Str sr="arg2" ve="3">keySet
+{Set} ()</Str>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act108" ve="7">
+			<code>664</code>
+			<se>false</se>
+			<Str sr="arg0" ve="3"/>
+			<Str sr="arg1" ve="3">Objects</Str>
+			<Str sr="arg2" ve="3">requireNonNull
+{Object} (Object)</Str>
+			<Str sr="arg3" ve="3">intent_extras_set</Str>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act109" ve="7">
+			<code>37</code>
+			<label>If exception not raised</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>0</op>
+					<rhs>\%err</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act11" ve="7">
+			<code>547</code>
+			<label>set %par1 to intent_uri</label>
+			<Str sr="arg0" ve="3">%intent_uri</Str>
+			<Str sr="arg1" ve="3">%par1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act110" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%is_object_null</Str>
+			<Str sr="arg1" ve="3">false</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act111" ve="7">
+			<code>43</code>
+			<label>Else if exception raised</label>
+		</Action>
+		<Action sr="act112" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%is_object_null</Str>
+			<Str sr="arg1" ve="3">true</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act113" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act114" ve="7">
+			<code>664</code>
+			<Str sr="arg0" ve="3">%intent_extras_set_size</Str>
+			<Str sr="arg1" ve="3">intent_extras_set</Str>
+			<Str sr="arg2" ve="3">size
+{int} ()</Str>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%is_object_null</lhs>
+					<op>0</op>
+					<rhs>false</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act115" ve="7">
+			<code>37</code>
+			<ConditionList sr="if">
+				<bool0>Or</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_extras_set_size</lhs>
+					<op>0</op>
+					<rhs>0</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%is_object_null</lhs>
+					<op>0</op>
+					<rhs>true</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act116" ve="7">
+			<code>135</code>
+			<Int sr="arg0" val="1"/>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3">Get Intent Extras End</Str>
+		</Action>
+		<Action sr="act117" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act118" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_info</Str>
+			<Str sr="arg1" ve="3">
+
+extras:</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act119" ve="7">
+			<code>664</code>
+			<Str sr="arg0" ve="3">(Iterator&lt;String&gt;) intent_extras_set_iterator</Str>
+			<Str sr="arg1" ve="3">intent_extras_set</Str>
+			<Str sr="arg2" ve="3">iterator
+{Iterator} ()</Str>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act12" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act120" ve="7">
+			<code>664</code>
+			<label>Check if intent_extras_set_iterator has next</label>
+			<Str sr="arg0" ve="3">%intent_extras_set_iterator_has_next</Str>
+			<Str sr="arg1" ve="3">intent_extras_set_iterator</Str>
+			<Str sr="arg2" ve="3">hasNext
+{boolean} ()</Str>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act121" ve="7">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_extras_set_iterator_has_next</lhs>
+					<op>0</op>
+					<rhs>true</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act122" ve="7">
+			<code>664</code>
+			<Str sr="arg0" ve="3">%intent_extra_key</Str>
+			<Str sr="arg1" ve="3">intent_extras_set_iterator</Str>
+			<Str sr="arg2" ve="3">next
+{Object} ()</Str>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act123" ve="7">
+			<code>664</code>
+			<se>false</se>
+			<Str sr="arg0" ve="3">intent_extra_value</Str>
+			<Str sr="arg1" ve="3">intent_extras</Str>
+			<Str sr="arg2" ve="3">get
+{Object} (String)</Str>
+			<Str sr="arg3" ve="3">%intent_extra_key</Str>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act124" ve="7">
+			<code>664</code>
+			<Str sr="arg0" ve="3">%intent_extra_class</Str>
+			<Str sr="arg1" ve="3">intent_extra_value</Str>
+			<Str sr="arg2" ve="3">getClass
+{Class} ()</Str>
+			<Str sr="arg3" ve="3">%intent_extra_key</Str>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act125" ve="7">
+			<code>664</code>
+			<se>false</se>
+			<Str sr="arg0" ve="3"/>
+			<Str sr="arg1" ve="3">Objects</Str>
+			<Str sr="arg2" ve="3">requireNonNull
+{Object} (Object)</Str>
+			<Str sr="arg3" ve="3">intent_extras_set</Str>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act126" ve="7">
+			<code>37</code>
+			<label>If exception raised</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>1</op>
+					<rhs>\%err</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act127" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">Warning! Intent Extra Value Is Null For Extra Key, Skipping Extra.
+
+intent_extra_key = "%intent_extra_key"
+
+intent_extra_class = "%intent_extra_class"</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act128" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%am_start_command_incomplete</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act129" ve="7">
+			<code>135</code>
+			<Int sr="arg0" val="1"/>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3">Check if intent_extras_set_iterator has next</Str>
+		</Action>
+		<Action sr="act13" ve="7">
+			<code>300</code>
+			<label>Convert Intent Uri To Intent Object</label>
+		</Action>
+		<Action sr="act130" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act131" ve="7">
+			<code>664</code>
+			<Str sr="arg0" ve="3">%intent_extra_value</Str>
+			<Str sr="arg1" ve="3">intent_extra_value</Str>
+			<Str sr="arg2" ve="3">toString
+{String} ()</Str>
+			<Str sr="arg3" ve="3">intent_extra_value</Str>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act132" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_info</Str>
+			<Str sr="arg1" ve="3">
+'%intent_extra_key' (%intent_extra_class): '%intent_extra_value'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act133" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_extra_key_escaped</Str>
+			<Str sr="arg1" ve="3">%intent_extra_key</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act134" ve="7">
+			<code>598</code>
+			<label>replace all single quotes (') with ('\'')</label>
+			<Str sr="arg0" ve="3">%intent_extra_key_escaped</Str>
+			<Str sr="arg1" ve="3">'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="1"/>
+			<Int sr="arg4" val="0"/>
+			<Str sr="arg5" ve="3"/>
+			<Int sr="arg6" val="1"/>
+			<Str sr="arg7" ve="3">'\\''</Str>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_extra_key_escaped</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act135" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_extra_value_escaped</Str>
+			<Str sr="arg1" ve="3">%intent_extra_value</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act136" ve="7">
+			<code>598</code>
+			<label>replace all single quotes (') with ('\'')</label>
+			<Str sr="arg0" ve="3">%intent_extra_value_escaped</Str>
+			<Str sr="arg1" ve="3">'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="1"/>
+			<Int sr="arg4" val="0"/>
+			<Str sr="arg5" ve="3"/>
+			<Int sr="arg6" val="1"/>
+			<Str sr="arg7" ve="3">'\\''</Str>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_extra_value_escaped</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act137" ve="7">
+			<code>37</code>
+			<label>If intent_extra_class is of type "String"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_extra_class</lhs>
+					<op>2</op>
+					<rhs>*String</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act138" ve="7">
+			<code>547</code>
+			<label>Append " --es '%intent_extra_key_escaped' '%intent_extra_value_escaped'" to am_start_command</label>
+			<Str sr="arg0" ve="3">%am_start_command</Str>
+			<Str sr="arg1" ve="3"> --es '%intent_extra_key_escaped' '%intent_extra_value_escaped'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act139" ve="7">
+			<code>43</code>
+			<label>If intent_extra_class is of type "Boolean"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_extra_class</lhs>
+					<op>2</op>
+					<rhs>*Boolean</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act14" ve="7">
+			<code>664</code>
+			<se>false</se>
+			<Str sr="arg0" ve="3">intent</Str>
+			<Str sr="arg1" ve="3">Intent</Str>
+			<Str sr="arg2" ve="3">getIntent
+{Intent} (String)</Str>
+			<Str sr="arg3" ve="3">%intent_uri</Str>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act140" ve="7">
+			<code>547</code>
+			<label>Append " --ez '%intent_extra_key_escaped' '%intent_extra_value_escaped'" to am_start_command</label>
+			<Str sr="arg0" ve="3">%am_start_command</Str>
+			<Str sr="arg1" ve="3"> --ez '%intent_extra_key_escaped' '%intent_extra_value_escaped'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act141" ve="7">
+			<code>43</code>
+			<label>If intent_extra_class is of type "Float"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_extra_class</lhs>
+					<op>2</op>
+					<rhs>*Float</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act142" ve="7">
+			<code>547</code>
+			<label>Append " --ef '%intent_extra_key_escaped' '%intent_extra_value_escaped'" to am_start_command</label>
+			<Str sr="arg0" ve="3">%am_start_command</Str>
+			<Str sr="arg1" ve="3"> --ef '%intent_extra_key_escaped' '%intent_extra_value_escaped'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act143" ve="7">
+			<code>43</code>
+			<label>If intent_extra_class is of type "Integer"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_extra_class</lhs>
+					<op>2</op>
+					<rhs>*Integer</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act144" ve="7">
+			<code>547</code>
+			<label>Append " --ei '%intent_extra_key_escaped' '%intent_extra_value_escaped'" to am_start_command</label>
+			<Str sr="arg0" ve="3">%am_start_command</Str>
+			<Str sr="arg1" ve="3"> --ei '%intent_extra_key_escaped' '%intent_extra_value_escaped'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act145" ve="7">
+			<code>43</code>
+			<label>If intent_extra_class is of type "Long"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_extra_class</lhs>
+					<op>2</op>
+					<rhs>*Long</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act146" ve="7">
+			<code>547</code>
+			<label>Append " --el '%intent_extra_key' '%intent_extra_value'" to am_start_command</label>
+			<Str sr="arg0" ve="3">%am_start_command</Str>
+			<Str sr="arg1" ve="3"> --el '%intent_extra_key_escaped' '%intent_extra_value_escaped'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act147" ve="7">
+			<code>43</code>
+		</Action>
+		<Action sr="act148" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">Warning! Intent Extra Type Cannot Be Sent Through "am command", Skipping Extra.
+
+intent_extra_key = "%intent_extra_key"
+
+intent_extra_class = "%intent_extra_class"
+
+intent_extra_value = "%intent_extra_value"</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act149" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%am_start_command_incomplete</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act15" ve="7">
+			<code>664</code>
+			<on>false</on>
+			<Str sr="arg0" ve="3"/>
+			<Str sr="arg1" ve="3">intent</Str>
+			<Str sr="arg2" ve="3">setFlags
+{Intent} (int)</Str>
+			<Str sr="arg3" ve="3">%intent_flags_override_value</Str>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act150" ve="7">
+			<code>135</code>
+			<Int sr="arg0" val="1"/>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3">Check if intent_extras_set_iterator has next</Str>
+		</Action>
+		<Action sr="act151" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act152" ve="7">
+			<code>135</code>
+			<Int sr="arg0" val="1"/>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3">Check if intent_extras_set_iterator has next</Str>
+		</Action>
+		<Action sr="act153" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act154" ve="7">
+			<code>300</code>
+			<label>Get Intent Extras End</label>
+		</Action>
+		<Action sr="act155" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_info</Str>
+			<Str sr="arg1" ve="3">%intent_info
+
+
+am start command:
+%am_start_command</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act156" ve="7">
+			<code>105</code>
+			<Str sr="arg0" ve="3">%intent_info</Str>
+			<Int sr="arg1" val="0"/>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%copy_intent_info_to_clipboard</lhs>
+					<op>0</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act157" ve="7">
+			<code>37</code>
+			<label>If run_am_start_command is set to "1"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%run_am_start_command</lhs>
+					<op>0</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act158" ve="7">
+			<code>37</code>
+			<label>If am_start_command_incomplete is set to "1"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%am_start_command_incomplete</lhs>
+					<op>0</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act159" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">Not Running "am start" command since its incomplete
+
+am_start_command = "%am_start_command"</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act16" ve="7">
+			<code>664</code>
+			<on>false</on>
+			<Str sr="arg0" ve="3"/>
+			<Str sr="arg1" ve="3">CONTEXT</Str>
+			<Str sr="arg2" ve="3">startActivity
+{} (Intent)</Str>
+			<Str sr="arg3" ve="3">intent</Str>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act160" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0"/>
+			<Str sr="arg1" ve="3"/>
+		</Action>
+		<Action sr="act161" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act162" ve="7">
+			<code>123</code>
+			<label>Run am_start_command</label>
+			<se>false</se>
+			<Str sr="arg0" ve="3">%am_start_command</Str>
+			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="0"/>
+			<Str sr="arg3" ve="3">%output</Str>
+			<Str sr="arg4" ve="3">%errors</Str>
+			<Str sr="arg5" ve="3"/>
+		</Action>
+		<Action sr="act163" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%exit_code</Str>
+			<Str sr="arg1" ve="3">%err</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act164" ve="7">
+			<code>37</code>
+			<label>If command failed</label>
+			<ConditionList sr="if">
+				<bool0>Or</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%exit_code</lhs>
+					<op>1</op>
+					<rhs>\%err</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%errors</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act165" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%flash_text</Str>
+			<Str sr="arg1" ve="3">am_start_command = "%am_start_command"
+
+exit_code = "%exit_code"
+
+output =
+"
+%output
+"
+
+errors =
+"
+%errors
+"</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act166" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">"am start" command failed
+
+%flash_text</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act167" ve="7">
+			<code>105</code>
+			<Str sr="arg0" ve="3">%flash_text</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+		<Action sr="act168" ve="7">
+			<code>43</code>
+		</Action>
+		<Action sr="act169" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">%output</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act17" ve="7">
+			<code>137</code>
+			<on>false</on>
+			<Int sr="arg0" val="0"/>
+			<Str sr="arg1" ve="3"/>
+		</Action>
+		<Action sr="act170" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act171" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act172" ve="7">
+			<code>126</code>
+			<Str sr="arg0" ve="3">%intent_info</Str>
+			<Int sr="arg1" val="1"/>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Str sr="arg4" ve="3"/>
+		</Action>
+		<Action sr="act18" ve="7">
+			<code>664</code>
+			<se>false</se>
+			<Str sr="arg0" ve="3"/>
+			<Str sr="arg1" ve="3">Objects</Str>
+			<Str sr="arg2" ve="3">requireNonNull
+{Object} (Object)</Str>
+			<Str sr="arg3" ve="3">intent</Str>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act19" ve="7">
+			<code>37</code>
+			<label>If exception raised</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>1</op>
+					<rhs>\%err</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>300</code>
+			<label>Set User Modifiable Variables Start</label>
+		</Action>
+		<Action sr="act20" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">Error! Intent Object Is Null For Intent Uri.
+
+intent_uri = "%intent_uri"</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act21" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0"/>
+			<Str sr="arg1" ve="3"/>
+		</Action>
+		<Action sr="act22" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act23" ve="7">
+			<code>664</code>
+			<Str sr="arg0" ve="3">intent_uri</Str>
+			<Str sr="arg1" ve="3">String</Str>
+			<Str sr="arg2" ve="3">new
+{String} (String)</Str>
+			<Str sr="arg3" ve="3">%intent_uri</Str>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act24" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_info</Str>
+			<Str sr="arg1" ve="3">Intent Info:
+</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act25" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%am_start_command</Str>
+			<Str sr="arg1" ve="3">am start --user 0</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act26" ve="7">
+			<code>300</code>
+			<label>Get Intent Data Uri</label>
+		</Action>
+		<Action sr="act27" ve="7">
+			<code>664</code>
+			<Str sr="arg0" ve="3">%intent_data_uri</Str>
+			<Str sr="arg1" ve="3">intent</Str>
+			<Str sr="arg2" ve="3">getData
+{Uri} ()</Str>
+			<Str sr="arg3" ve="3">%intent_action_pick_activity</Str>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act28" ve="7">
+			<code>37</code>
+			<label>If intent data uri is set</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_data_uri</lhs>
+					<op>1</op>
+					<rhs>\%intent_data_uri</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act29" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_info</Str>
+			<Str sr="arg1" ve="3">
+data uri: '%intent_data_uri'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>547</code>
+			<label>Set intent_uri
+Default: reddit app shortcut</label>
+			<Str sr="arg0" ve="3">%intent_uri</Str>
+			<Str sr="arg1" ve="3">#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.reddit.frontpage/.StartActivity;l.profile=-1;end</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act30" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_data_uri_escaped</Str>
+			<Str sr="arg1" ve="3">%intent_data_uri</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act31" ve="7">
+			<code>598</code>
+			<label>replace all single quotes (') with ('\'')</label>
+			<Str sr="arg0" ve="3">%intent_data_uri_escaped</Str>
+			<Str sr="arg1" ve="3">'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="1"/>
+			<Int sr="arg4" val="0"/>
+			<Str sr="arg5" ve="3"/>
+			<Int sr="arg6" val="1"/>
+			<Str sr="arg7" ve="3">'\\''</Str>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_data_uri_escaped</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act32" ve="7">
+			<code>547</code>
+			<label>Append " -d '%intent_data_uri_escaped'" to am_start_command</label>
+			<Str sr="arg0" ve="3">%am_start_command</Str>
+			<Str sr="arg1" ve="3"> -d '%intent_data_uri_escaped'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act33" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act34" ve="7">
+			<code>300</code>
+			<label>Get Intent Action</label>
+		</Action>
+		<Action sr="act35" ve="7">
+			<code>664</code>
+			<Str sr="arg0" ve="3">%intent_action</Str>
+			<Str sr="arg1" ve="3">intent</Str>
+			<Str sr="arg2" ve="3">getAction
+{String} ()</Str>
+			<Str sr="arg3" ve="3">%intent_action_pick_activity</Str>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act36" ve="7">
+			<code>37</code>
+			<label>If intent action is set</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_action</lhs>
+					<op>1</op>
+					<rhs>\%intent_action</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act37" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_info</Str>
+			<Str sr="arg1" ve="3">
+action: '%intent_action'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act38" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_action_escaped</Str>
+			<Str sr="arg1" ve="3">%intent_action</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act39" ve="7">
+			<code>598</code>
+			<label>replace all single quotes (') with ('\'')</label>
+			<Str sr="arg0" ve="3">%intent_action_escaped</Str>
+			<Str sr="arg1" ve="3">'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="1"/>
+			<Int sr="arg4" val="0"/>
+			<Str sr="arg5" ve="3"/>
+			<Int sr="arg6" val="1"/>
+			<Str sr="arg7" ve="3">'\\''</Str>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_action_escaped</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act4" ve="7">
+			<code>547</code>
+			<label>Set intent_uri
+Default: reddit tasker subreddit shortcut</label>
+			<on>false</on>
+			<Str sr="arg0" ve="3">%intent_uri</Str>
+			<Str sr="arg1" ve="3">reddit://reddit/r/tasker/#Intent;package=com.reddit.frontpage;B.shortcut_is_from_home_screen=true;end</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act40" ve="7">
+			<code>547</code>
+			<label>Append " -a '%intent_action_escaped'" to am_start_command</label>
+			<Str sr="arg0" ve="3">%am_start_command</Str>
+			<Str sr="arg1" ve="3"> -a '%intent_action_escaped'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act41" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act42" ve="7">
+			<code>300</code>
+			<label>Get Intent Type</label>
+		</Action>
+		<Action sr="act43" ve="7">
+			<code>664</code>
+			<Str sr="arg0" ve="3">%intent_type</Str>
+			<Str sr="arg1" ve="3">intent</Str>
+			<Str sr="arg2" ve="3">getType
+{String} ()</Str>
+			<Str sr="arg3" ve="3">%intent_action_pick_activity</Str>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act44" ve="7">
+			<code>37</code>
+			<label>If intent type is set</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_type</lhs>
+					<op>1</op>
+					<rhs>\%intent_type</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act45" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_info</Str>
+			<Str sr="arg1" ve="3">
+type: '%intent_type'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act46" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_type_escaped</Str>
+			<Str sr="arg1" ve="3">%intent_type</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act47" ve="7">
+			<code>598</code>
+			<label>replace all single quotes (') with ('\'')</label>
+			<Str sr="arg0" ve="3">%intent_type_escaped</Str>
+			<Str sr="arg1" ve="3">'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="1"/>
+			<Int sr="arg4" val="0"/>
+			<Str sr="arg5" ve="3"/>
+			<Int sr="arg6" val="1"/>
+			<Str sr="arg7" ve="3">'\\''</Str>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_type_escaped</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act48" ve="7">
+			<code>547</code>
+			<label>Append " -t '%intent_type_escaped'" to am_start_command</label>
+			<Str sr="arg0" ve="3">%am_start_command</Str>
+			<Str sr="arg1" ve="3"> -t '%intent_type_escaped'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act49" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act5" ve="7">
+			<code>547</code>
+			<label>Set copy_intent_info_to_clipboard
+Default: "1"</label>
+			<Str sr="arg0" ve="3">%copy_intent_info_to_clipboard</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act50" ve="7">
+			<code>300</code>
+			<label>Get Intent Scheme</label>
+		</Action>
+		<Action sr="act51" ve="7">
+			<code>664</code>
+			<Str sr="arg0" ve="3">%intent_scheme</Str>
+			<Str sr="arg1" ve="3">intent</Str>
+			<Str sr="arg2" ve="3">getScheme
+{String} ()</Str>
+			<Str sr="arg3" ve="3">%intent_action_pick_activity</Str>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act52" ve="7">
+			<code>37</code>
+			<label>If intent scheme is set</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_scheme</lhs>
+					<op>1</op>
+					<rhs>\%intent_scheme</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act53" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_info</Str>
+			<Str sr="arg1" ve="3">
+scheme: '%intent_scheme'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act54" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act55" ve="7">
+			<code>300</code>
+			<label>Get Intent Package</label>
+		</Action>
+		<Action sr="act56" ve="7">
+			<code>664</code>
+			<Str sr="arg0" ve="3">%intent_package</Str>
+			<Str sr="arg1" ve="3">intent</Str>
+			<Str sr="arg2" ve="3">getPackage
+{String} ()</Str>
+			<Str sr="arg3" ve="3">%intent_action_pick_activity</Str>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act57" ve="7">
+			<code>37</code>
+			<label>If intent package is set</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_package</lhs>
+					<op>1</op>
+					<rhs>\%intent_package</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act58" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_info</Str>
+			<Str sr="arg1" ve="3">
+package: '%intent_package'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act59" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act6" ve="7">
+			<code>547</code>
+			<label>Set run_am_start_command
+Default: "1"</label>
+			<on>false</on>
+			<Str sr="arg0" ve="3">%run_am_start_command</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act60" ve="7">
+			<code>300</code>
+			<label>Get Intent Component</label>
+		</Action>
+		<Action sr="act61" ve="7">
+			<code>664</code>
+			<Str sr="arg0" ve="3">%intent_component</Str>
+			<Str sr="arg1" ve="3">intent</Str>
+			<Str sr="arg2" ve="3">getComponent
+{ComponentName} ()</Str>
+			<Str sr="arg3" ve="3">%intent_action_pick_activity</Str>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act62" ve="7">
+			<code>37</code>
+			<label>If intent component is set</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_component</lhs>
+					<op>1</op>
+					<rhs>\%intent_component</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act63" ve="7">
+			<code>598</code>
+			<Str sr="arg0" ve="3">%intent_component</Str>
+			<Str sr="arg1" ve="3">ComponentInfo\{(.*)\}</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Str sr="arg5" ve="3"/>
+			<Int sr="arg6" val="1"/>
+			<Str sr="arg7" ve="3">$1</Str>
+		</Action>
+		<Action sr="act64" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_info</Str>
+			<Str sr="arg1" ve="3">
+component: '%intent_component'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act65" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_component_escaped</Str>
+			<Str sr="arg1" ve="3">%intent_component</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act66" ve="7">
+			<code>598</code>
+			<label>replace all single quotes (') with ('\'')</label>
+			<Str sr="arg0" ve="3">%intent_component_escaped</Str>
+			<Str sr="arg1" ve="3">'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="1"/>
+			<Int sr="arg4" val="0"/>
+			<Str sr="arg5" ve="3"/>
+			<Int sr="arg6" val="1"/>
+			<Str sr="arg7" ve="3">'\\''</Str>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_component_escaped</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act67" ve="7">
+			<code>547</code>
+			<label>Append " -n '%intent_component_escaped'" to am_start_command</label>
+			<Str sr="arg0" ve="3">%am_start_command</Str>
+			<Str sr="arg1" ve="3"> -n '%intent_component_escaped'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act68" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act69" ve="7">
+			<code>300</code>
+			<label>Get Intent Flags</label>
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>547</code>
+			<label>Set override_am_command_flags_value
+Default: "1"</label>
+			<Str sr="arg0" ve="3">%override_am_command_flags_value</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act70" ve="7">
+			<code>664</code>
+			<Str sr="arg0" ve="3">%intent_flags</Str>
+			<Str sr="arg1" ve="3">intent</Str>
+			<Str sr="arg2" ve="3">getFlags
+{int} ()</Str>
+			<Str sr="arg3" ve="3">%intent_action_pick_activity</Str>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act71" ve="7">
+			<code>37</code>
+			<label>If intent flags is not set</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_flags</lhs>
+					<op>0</op>
+					<rhs>\%intent_flags</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act72" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_flags</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act73" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act74" ve="7">
+			<code>596</code>
+			<Str sr="arg0" ve="3">%intent_flags</Str>
+			<Int sr="arg1" val="23"/>
+			<Str sr="arg2" ve="3">%intent_flags_hex</Str>
+			<Int sr="arg3" val="0"/>
+		</Action>
+		<Action sr="act75" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_info</Str>
+			<Str sr="arg1" ve="3">
+flags: '%intent_flags (0x%intent_flags_hex)'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act76" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_flags</Str>
+			<Str sr="arg1" ve="3">%intent_flags_override_value</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%override_am_command_flags_value</lhs>
+					<op>0</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act77" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_flags_escaped</Str>
+			<Str sr="arg1" ve="3">%intent_flags</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act78" ve="7">
+			<code>598</code>
+			<label>replace all single quotes (') with ('\'')</label>
+			<Str sr="arg0" ve="3">%intent_flags_escaped</Str>
+			<Str sr="arg1" ve="3">'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="1"/>
+			<Int sr="arg4" val="0"/>
+			<Str sr="arg5" ve="3"/>
+			<Int sr="arg6" val="1"/>
+			<Str sr="arg7" ve="3">'\\''</Str>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_flags_escaped</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act79" ve="7">
+			<code>547</code>
+			<label>Append " -f '%intent_flags_escaped'" to am_start_command</label>
+			<Str sr="arg0" ve="3">%am_start_command</Str>
+			<Str sr="arg1" ve="3"> -f '%intent_flags_escaped'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act8" ve="7">
+			<code>300</code>
+			<label>Set User Modifiable Variables End</label>
+		</Action>
+		<Action sr="act80" ve="7">
+			<code>300</code>
+			<label>Get Intent Categories Start</label>
+		</Action>
+		<Action sr="act81" ve="7">
+			<code>664</code>
+			<se>false</se>
+			<Str sr="arg0" ve="3">(Set&lt;String&gt;) intent_categories_set</Str>
+			<Str sr="arg1" ve="3">intent</Str>
+			<Str sr="arg2" ve="3">getCategories
+{Set} ()</Str>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act82" ve="7">
+			<code>664</code>
+			<se>false</se>
+			<Str sr="arg0" ve="3"/>
+			<Str sr="arg1" ve="3">Objects</Str>
+			<Str sr="arg2" ve="3">requireNonNull
+{Object} (Object)</Str>
+			<Str sr="arg3" ve="3">intent_categories_set</Str>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act83" ve="7">
+			<code>37</code>
+			<label>If exception not raised</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>0</op>
+					<rhs>\%err</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act84" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%is_object_null</Str>
+			<Str sr="arg1" ve="3">false</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act85" ve="7">
+			<code>43</code>
+			<label>Else if exception raised</label>
+		</Action>
+		<Action sr="act86" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%is_object_null</Str>
+			<Str sr="arg1" ve="3">true</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act87" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act88" ve="7">
+			<code>664</code>
+			<Str sr="arg0" ve="3">%intent_categories_set_size</Str>
+			<Str sr="arg1" ve="3">intent_categories_set</Str>
+			<Str sr="arg2" ve="3">size
+{int} ()</Str>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%is_object_null</lhs>
+					<op>0</op>
+					<rhs>false</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act89" ve="7">
+			<code>37</code>
+			<ConditionList sr="if">
+				<bool0>Or</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_categories_set_size</lhs>
+					<op>0</op>
+					<rhs>0</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%is_object_null</lhs>
+					<op>0</op>
+					<rhs>true</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act9" ve="7">
+			<code>547</code>
+			<label>FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TOP 335544320 (0x14000000)</label>
+			<Str sr="arg0" ve="3">%intent_flags_override_value</Str>
+			<Str sr="arg1" ve="3">335544320</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act90" ve="7">
+			<code>135</code>
+			<Int sr="arg0" val="1"/>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3">Get Intent Categories End</Str>
+		</Action>
+		<Action sr="act91" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act92" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_info</Str>
+			<Str sr="arg1" ve="3">
+categories: </Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act93" ve="7">
+			<code>664</code>
+			<Str sr="arg0" ve="3">(Iterator&lt;String&gt;) intent_categories_set_iterator</Str>
+			<Str sr="arg1" ve="3">intent_categories_set</Str>
+			<Str sr="arg2" ve="3">iterator
+{Iterator} ()</Str>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act94" ve="7">
+			<code>664</code>
+			<label>Check if intent_categories_set_iterator has next</label>
+			<Str sr="arg0" ve="3">%intent_categories_set_iterator_has_next</Str>
+			<Str sr="arg1" ve="3">intent_categories_set_iterator</Str>
+			<Str sr="arg2" ve="3">hasNext
+{boolean} ()</Str>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act95" ve="7">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_categories_set_iterator_has_next</lhs>
+					<op>0</op>
+					<rhs>true</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act96" ve="7">
+			<code>664</code>
+			<Str sr="arg0" ve="3">%intent_category</Str>
+			<Str sr="arg1" ve="3">intent_categories_set_iterator</Str>
+			<Str sr="arg2" ve="3">next
+{Object} ()</Str>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act97" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_info</Str>
+			<Str sr="arg1" ve="3"> '%intent_category',</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act98" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%intent_category_escaped</Str>
+			<Str sr="arg1" ve="3">%intent_category</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act99" ve="7">
+			<code>598</code>
+			<label>replace all single quotes (') with ('\'')</label>
+			<Str sr="arg0" ve="3">%intent_category_escaped</Str>
+			<Str sr="arg1" ve="3">'</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="1"/>
+			<Int sr="arg4" val="0"/>
+			<Str sr="arg5" ve="3"/>
+			<Int sr="arg6" val="1"/>
+			<Str sr="arg7" ve="3">'\\''</Str>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%intent_category_escaped</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+	</Task>
+	<Task sr="task925">
+		<cdate>1588617967656</cdate>
+		<edate>1589603913648</edate>
+		<id>925</id>
+		<nme>Send Shortcut Intent With TaskerLauncherShortcut</nme>
+		<pri>100</pri>
+		<rty>2</rty>
+		<Action sr="act0" ve="7">
+			<code>300</code>
+			<label>A task that starts a launcher shortcut using the TaskerLauncherShortcut plugin.
+
+In Android 7.1(API 25) new [ShortcutManager](https://developer.android.com/reference/android/content/pm/ShortcutManager) APIs were added for apps to create shortcuts and [LauncherApps](https://developer.android.com/reference/android/content/pm/LauncherApps) APIs for launcher apps to access shortcuts.
+
+There are mainly 3 types of shortcuts, static, dynamic and pinned. Static remain the same and are mainly declared in the android manifest of the app. Dynamic shortcuts are published by apps at runtime to ShortcutManager and displayed by launchers like nova launcher by long pressing the app icon. Pinned icons are shortcuts sent by apps to the launcher when you press buttons like "Add to Home screen", like pinning a website or chat shortcut on the launcher home. The static and pinned shortcuts also existed before android 7.1 but used different ways to publish or create shortcuts and they could be started by any app by sending intents through java or am commands. However, the dynamic and pinned shortcuts and some static shortcuts for android 7.1 and higher can only be started by the default launcher apps or currently active voice interaction service. The permission can be checked by an app using [hasShortcutHostPermission](https://developer.android.com/reference/android/content/pm/LauncherApps#hasShortcutHostPermission()). If the app doesn't have the permission, the shortcut intent's desired action will not be successful, even though the target app may open. These shortcuts contain a special category called "com.android.launcher3.DEEP_SHORTCUT" and also have an string extra called "shortcut_id" which defines the id with which the shortcut is registered under the ShortcutManager. Moreover, dynamic shortcuts published by apps can't even be queried by apps and nor can pinned shortcuts be received by apps that don't have the required permission. Another point is that these shortcuts can't be used in android less than 7.1 since ShortcutManager doesn't exist, since the real intent and it's extras are stored by the ShortcutManager when dynamic shortcuts are published by the apps and launcher apps don't have access to them, they only receive a shortcut_id from which the shortcut could be started using the LauncherApps startShortcut() API. Another thing is that there is a way for static shortcuts that only show in android 7.1 and higher to be shown in older devices as well, since nova launcher does it, but this has to yet to be investigated and the TaskerLauncherShortcut plugin doesn't support it currently.
+
+For these reasons the Tasker "Shortcut" action, AutoShortcut, java intents or am command is not going to work in android 7.1 and higher for DEEP_SHORTCUTS. What can be done is either ask your default launcher dev to add support for a tasker plugin or intent that may be used to start intents stored in the launcher or use the TaskerLauncherShortcut app plugin which takes a shortcut intent Uri as input and starts the shortcut. The TaskerLauncherShortcut is a launcher app and created mainly for starting shortcuts and has a plugin that can be used with tasker. It should ideally support all android versions greater than or equal to 4.1 (API 16). It's a very basic launcher and the homescreen only shows a list of installed apps that can be started on click and does not support adding shortcuts to homescreen. It's options menu supports changing the default launcher by showing the android's "Choose Default Home" screen and also supports searching for static, dynamic and pinned shortcuts depending on android version, the selected shortcut's intent Uri is only copied to the clipboard for other uses like using it in the plugin inside Tasker. The pinned shortcut are of course only received by the launcher app when an app sends them and can't be searched. Previously pinned shortcuts can technically be shown but are not.
+
+Now as already mentioned that DEEP_SHORTCUTS requires the app starting the shortcut to be the default launcher app, so the TaskerLauncherShortcut must be the default launcher app when the plugin is called. To change the default launcher app without using touch simulation or Autoinput and just using background commands requires either root or adb. The "cmd package set-home-activity %launcher_package_and_activity_name" command can be used for this. Setting tasker as the device owner (not device administrator) may work but requires more work. The "Send Shortcut Intent With TaskerLauncherShortcut" task is provided by the "TaskerLauncherShortcut" tasker project that takes cares of everything for the user. It takes an intent Uri as input %par1 and if it's a DEEP_SHORTCUT, then it automatically sets the "TaskerLauncherShortcut" app as the default launcher, starts the shortcut and then resets the user's normal launcher app as the default launcher. The default launchers are set by the "Get And Set Default Launcher" task. This is done in the background and does not require any interaction. Changing the default launcher for shortcuts that are not DEEP_SHORTCUT is not required and so neither is root or adb and you may use the plugin directly in any task as a standalone action instead of using the "Send Shortcut Intent With TaskerLauncherShortcut" task. The plugin also has an internal "Search Shortcuts" button when you open the plugin configuration while editing the plugin action that automatically sets the plugin input field with the intent Uri. The plugin action in the "Send Shortcut Intent With TaskerLauncherShortcut" task uses a local variable so that same action can be used dynamically for different intents received as parameters to the task, do not edit it. A template task "TaskerLauncherShortcut Non DEEP_SHORTCUT Template" is given for this.
+
+To use DEEP_SHORTCUT shortcuts, you must do two things:
+
+1. You need to set the "%normal_default_launcher_package_and_activity_name variable" in the "Send Shortcut Intent With TaskerLauncherShortcut" task. It defines the package and activity name of the normal default launcher that should be reverted back to after the shortcut has been sent. By default this is set to nova launcher. If you use a different launcher, then just run the "Get And Set Default Launcher" task directly from the tasker UI and the package and activity name of your current launcher will be copied to the clipboard. Paste that in the "Variable Set" action of the "%normal_default_launcher_package_and_activity_name" variable in the "Send Shortcut Intent With TaskerLauncherShortcut" task.
+
+2. You need a find the shortcut intent Uri that needs to be passed to the "Send Shortcut Intent With TaskerLauncherShortcut" task as %par1. Open the "TaskerLauncherShortcut" app, and from its options, click "Search Shortcuts". You will be asked to set the app as the default launcher. Make sure to select "Always" or "Use as default app" instead of "Just Once", depending on android version. Press Home button to make sure its set as the default and that no prompt is shown. Once its set, then return to the Shortcut Chooser activity. For static and dynamic shortcuts, just clicking on the shortcut will copy the Uri. For static shortcuts, you may be taken to a configuration screen. For pinned shortcuts, you will be asked to go to the app for which you want to create a pinned shortcut for and create it and then return. Once you go to the app like chrome and click something like "Add to Home screen" and return to Shortcut Chooser activity from recents menu, the shortcut intent Uri will be copied to the clipboard. Use that intent Uri in a tasker task and send it as %par1 to the "Send Shortcut Intent With TaskerLauncherShortcut" task with a "Perform Task" action to start the shortcut. A template task "TaskerLauncherShortcut DEEP_SHORTCUT Template" is given for this.
+
+
+The shortcut_intent_uri passed to this task as %par1 must be set to a valid intent Uri.
+
+The %normal_default_launcher_package_and_activity_name must be set in the format "package_name/activity_name"
+
+
+Input %par1: #optional
+"
+shortcut_intent_uri
+"
+
+Returns:
+"
+result_code
+taskerlaunchershortcut_errmsg #optional
+"
+
+If task is successful, then result_code will contain 0.
+Otherwise it will contain appropriate exit code.
+
+taskerlaunchershortcut_errmsg will contain %errmsg if the plugin action failed.</label>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%task_name</Str>
+			<Str sr="arg1" ve="3">Send Shortcut Intent With TaskerLauncherShortcut</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">URISyntaxException: Invalid Shortcut Intent Uri</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act11" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%result_code</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act12" ve="7">
+			<code>135</code>
+			<Int sr="arg0" val="1"/>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3">Return</Str>
+		</Action>
+		<Action sr="act13" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act14" ve="7">
+			<code>37</code>
+			<label>If Shortcut Intent Has Category "com.android.launcher3.DEEP_SHORTCUT"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%shortcut_intent_uri</lhs>
+					<op>2</op>
+					<rhs>*category=com.android.launcher3.DEEP_SHORTCUT;*</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act15" ve="7">
+			<code>37</code>
+			<label>If API &lt; N_MR1(25)</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%SDK</lhs>
+					<op>6</op>
+					<rhs>25</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act16" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">Dynamic or Pinned DEEP_SHORTCUT Intents Can Only Be Sent On API &gt;= N_MR1(25)</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act17" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%result_code</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act18" ve="7">
+			<code>135</code>
+			<Int sr="arg0" val="1"/>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3">Return</Str>
+		</Action>
+		<Action sr="act19" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>300</code>
+			<label>Set User Modifiable Variables Start</label>
+		</Action>
+		<Action sr="act20" ve="7">
+			<code>43</code>
+		</Action>
+		<Action sr="act21" ve="7">
+			<code>547</code>
+			<label>Set 1 to skip_set_default_launcher</label>
+			<Str sr="arg0" ve="3">%skip_set_default_launcher</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act22" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act23" ve="7">
+			<code>300</code>
+			<label>Set Default Launcher To TaskerLauncherShortcut Start</label>
+		</Action>
+		<Action sr="act24" ve="7">
+			<code>37</code>
+			<label>If skip_set_default_launcher is set to "1"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%skip_set_default_launcher</lhs>
+					<op>0</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act25" ve="7">
+			<code>135</code>
+			<label>Goto "Set Default Launcher To TaskerLauncherShortcut End"</label>
+			<Int sr="arg0" val="1"/>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3">Set Default Launcher To TaskerLauncherShortcut End</Str>
+		</Action>
+		<Action sr="act26" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act27" ve="7">
+			<code>549</code>
+			<Str sr="arg0" ve="3">%result_code</Str>
+			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+		</Action>
+		<Action sr="act28" ve="7">
+			<code>130</code>
+			<Str sr="arg0" ve="3">Get And Set Default Launcher</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Str sr="arg2" ve="3">set</Str>
+			<Str sr="arg3" ve="3">%taskerlaunchershortcut_launcher_package_and_activity_name</Str>
+			<Str sr="arg4" ve="3">%result_code</Str>
+			<Int sr="arg5" val="0"/>
+			<Int sr="arg6" val="0"/>
+			<Str sr="arg7" ve="3"/>
+		</Action>
+		<Action sr="act29" ve="7">
+			<code>37</code>
+			<label>If task failed</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%result_code</lhs>
+					<op>1</op>
+					<rhs>0</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>547</code>
+			<label>Set normal_default_launcher_package_and_activity_name
+Default: Nova Launcher</label>
+			<Str sr="arg0" ve="3">%normal_default_launcher_package_and_activity_name</Str>
+			<Str sr="arg1" ve="3">com.teslacoilsw.launcher/com.teslacoilsw.launcher.NovaLauncher</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act30" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%result_code</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%result_code</lhs>
+					<op>0</op>
+					<rhs>\%result_code</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act31" ve="7">
+			<code>135</code>
+			<Int sr="arg0" val="1"/>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3">Return</Str>
+		</Action>
+		<Action sr="act32" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act33" ve="7">
+			<code>300</code>
+			<label>Set Default Launcher To TaskerLauncherShortcut End</label>
+		</Action>
+		<Action sr="act34" ve="7">
+			<code>300</code>
+			<label>Send Shortcut Intent Start</label>
+		</Action>
+		<Action sr="act35" ve="7">
+			<code>549</code>
+			<Str sr="arg0" ve="3">%result_code</Str>
+			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+		</Action>
+		<Action sr="act36" ve="7">
+			<code>656793780</code>
+			<se>false</se>
+			<Bundle sr="arg0">
+				<Vals sr="val">
+					<com.agnostic.apollo.taskerlaunchershortcut.extra.INT_VERSION_CODE>1</com.agnostic.apollo.taskerlaunchershortcut.extra.INT_VERSION_CODE>
+					<com.agnostic.apollo.taskerlaunchershortcut.extra.INT_VERSION_CODE-type>java.lang.Integer</com.agnostic.apollo.taskerlaunchershortcut.extra.INT_VERSION_CODE-type>
+					<com.agnostic.apollo.taskerlaunchershortcut.extra.STRING_SHORTCUT_INTENT_URI>%shortcut_intent_uri</com.agnostic.apollo.taskerlaunchershortcut.extra.STRING_SHORTCUT_INTENT_URI>
+					<com.agnostic.apollo.taskerlaunchershortcut.extra.STRING_SHORTCUT_INTENT_URI-type>java.lang.String</com.agnostic.apollo.taskerlaunchershortcut.extra.STRING_SHORTCUT_INTENT_URI-type>
+					<com.twofortyfouram.locale.intent.extra.BLURB>%shortcut_intent_uri</com.twofortyfouram.locale.intent.extra.BLURB>
+					<com.twofortyfouram.locale.intent.extra.BLURB-type>java.lang.String</com.twofortyfouram.locale.intent.extra.BLURB-type>
+					<net.dinglisch.android.tasker.RELEVANT_VARIABLES>&lt;StringArray sr=""&gt;&lt;_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES0&gt;%result_code
+Result Code
+The result code for sending shortcut intent.
+0 for success, otherwise a failure.&lt;/_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES0&gt;&lt;_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES1&gt;%errmsg
+Error Message
+The err message of the action.&lt;/_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES1&gt;&lt;/StringArray&gt;</net.dinglisch.android.tasker.RELEVANT_VARIABLES>
+					<net.dinglisch.android.tasker.RELEVANT_VARIABLES-type>[Ljava.lang.String;</net.dinglisch.android.tasker.RELEVANT_VARIABLES-type>
+					<net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS>com.agnostic.apollo.taskerlaunchershortcut.extra.STRING_SHORTCUT_INTENT_URI</net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS>
+					<net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS-type>java.lang.String</net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS-type>
+					<net.dinglisch.android.tasker.subbundled>true</net.dinglisch.android.tasker.subbundled>
+					<net.dinglisch.android.tasker.subbundled-type>java.lang.Boolean</net.dinglisch.android.tasker.subbundled-type>
+				</Vals>
+			</Bundle>
+			<Str sr="arg1" ve="3">com.agnostic.apollo.taskerlaunchershortcut</Str>
+			<Str sr="arg2" ve="3">com.agnostic.apollo.taskerlaunchershortcut.ui.activity.PluginActivity</Str>
+			<Int sr="arg3" val="10"/>
+		</Action>
+		<Action sr="act37" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%taskerlaunchershortcut_errmsg</Str>
+			<Str sr="arg1" ve="3">%errmsg</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%errmsg</lhs>
+					<op>1</op>
+					<rhs>\%errmsg</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act38" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%taskerlaunchershortcut_result_code</Str>
+			<Str sr="arg1" ve="3">%result_code</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act39" ve="7">
+			<code>300</code>
+			<label>Send Shortcut Intent End</label>
+		</Action>
+		<Action sr="act4" ve="7">
+			<code>300</code>
+			<label>Set User Modifiable Variables End</label>
+		</Action>
+		<Action sr="act40" ve="7">
+			<code>300</code>
+			<label>Set Default Launcher Back To Normal Launcher Start</label>
+		</Action>
+		<Action sr="act41" ve="7">
+			<code>37</code>
+			<label>If skip_set_default_launcher is set to "1"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%skip_set_default_launcher</lhs>
+					<op>0</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act42" ve="7">
+			<code>135</code>
+			<label>Goto "Set Default Launcher Back To Normal Launcher End"</label>
+			<Int sr="arg0" val="1"/>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3">Set Default Launcher Back To Normal Launcher End</Str>
+		</Action>
+		<Action sr="act43" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act44" ve="7">
+			<code>549</code>
+			<Str sr="arg0" ve="3">%result_code</Str>
+			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+		</Action>
+		<Action sr="act45" ve="7">
+			<code>130</code>
+			<Str sr="arg0" ve="3">Get And Set Default Launcher</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Str sr="arg2" ve="3">set</Str>
+			<Str sr="arg3" ve="3">%normal_default_launcher_package_and_activity_name</Str>
+			<Str sr="arg4" ve="3">%result_code</Str>
+			<Int sr="arg5" val="0"/>
+			<Int sr="arg6" val="0"/>
+			<Str sr="arg7" ve="3"/>
+		</Action>
+		<Action sr="act46" ve="7">
+			<code>37</code>
+			<label>If task failed</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%result_code</lhs>
+					<op>1</op>
+					<rhs>0</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act47" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%result_code</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%result_code</lhs>
+					<op>0</op>
+					<rhs>\%result_code</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act48" ve="7">
+			<code>135</code>
+			<Int sr="arg0" val="1"/>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3">Return</Str>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%taskerlaunchershortcut_result_code</lhs>
+					<op>0</op>
+					<rhs>0</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act49" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act5" ve="7">
+			<code>547</code>
+			<label>Set taskerlaunchershortcut_launcher_package_and_activity_name</label>
+			<Str sr="arg0" ve="3">%taskerlaunchershortcut_launcher_package_and_activity_name</Str>
+			<Str sr="arg1" ve="3">com.agnostic.apollo.taskerlaunchershortcut/com.agnostic.apollo.taskerlaunchershortcut.LauncherHomeActivity</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act50" ve="7">
+			<code>300</code>
+			<label>Set Default Launcher Back To Normal Launcher End</label>
+		</Action>
+		<Action sr="act51" ve="7">
+			<code>37</code>
+			<label>If TaskerLauncherShortcut plugin action failed</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%taskerlaunchershortcut_result_code</lhs>
+					<op>1</op>
+					<rhs>0</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act52" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%result_code</Str>
+			<Str sr="arg1" ve="3">%taskerlaunchershortcut_result_code</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act53" ve="7">
+			<code>43</code>
+		</Action>
+		<Action sr="act54" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%result_code</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act55" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act56" ve="7">
+			<code>300</code>
+			<label>Return</label>
+		</Action>
+		<Action sr="act57" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%result</Str>
+			<Str sr="arg1" ve="3">%result_code</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act58" ve="7">
+			<code>547</code>
+			<label>Append taskerlaunchershortcut_errmsg to result if set</label>
+			<Str sr="arg0" ve="3">%result</Str>
+			<Str sr="arg1" ve="3">
+%taskerlaunchershortcut_errmsg</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="1"/>
+			<Int sr="arg5" val="3"/>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%taskerlaunchershortcut_errmsg</lhs>
+					<op>1</op>
+					<rhs>\%taskerlaunchershortcut_errmsg</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act59" ve="7">
+			<code>126</code>
+			<Str sr="arg0" ve="3">%result</Str>
+			<Int sr="arg1" val="1"/>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Str sr="arg4" ve="3"/>
+		</Action>
+		<Action sr="act6" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%shortcut_intent_uri</Str>
+			<Str sr="arg1" ve="3">%par1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>547</code>
+			<on>false</on>
+			<Str sr="arg0" ve="3">%shortcut_intent_uri</Str>
+			<Str sr="arg1" ve="3">reddit://reddit/r/tasker/#Intent;package=com.reddit.frontpage;B.shortcut_is_from_home_screen=true;end</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act8" ve="7">
+			<code>664</code>
+			<se>false</se>
+			<Str sr="arg0" ve="3"/>
+			<Str sr="arg1" ve="3">Intent</Str>
+			<Str sr="arg2" ve="3">parseUri
+{Intent} (String, int)</Str>
+			<Str sr="arg3" ve="3">%shortcut_intent_uri</Str>
+			<Str sr="arg4" ve="3">0</Str>
+			<Str sr="arg5" ve="3"/>
+			<Str sr="arg6" ve="3"/>
+			<Str sr="arg7" ve="3"/>
+			<Str sr="arg8" ve="3"/>
+			<Str sr="arg9" ve="3"/>
+		</Action>
+		<Action sr="act9" ve="7">
+			<code>37</code>
+			<label>If Parsing Intent Failed</label>
+			<ConditionList sr="if">
+				<bool0>Or</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs>*category=com.android.launcher3.DEEP_SHORTCUT;*</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%shortcut_intent_uri</lhs>
+					<op>0</op>
+					<rhs>\%par1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+	</Task>
+	<Task sr="task955">
+		<cdate>1589596274266</cdate>
+		<edate>1589598092503</edate>
+		<id>955</id>
+		<nme>TaskerLauncherShortcut DEEP_SHORTCUT Template</nme>
+		<pri>100</pri>
+		<Action sr="act0" ve="7">
+			<code>300</code>
+			<label>A template task that runs the "Send Shortcut Intent With TaskerLauncherShortcut" task to send a DEEP_SHORTCUT shortcut intent Uri with TaskerLauncherShortcut plugin. The default value will only work for android greater than 7.1 (API 25). Kiwi Browser must also be installed for default value to work.
+
+
+This task does not take any parameters or return anything.</label>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>547</code>
+			<label>Set shortcut_intent_uri
+Default: kiwi browser new incognito tab</label>
+			<Str sr="arg0" ve="3">%shortcut_intent_uri</Str>
+			<Str sr="arg1" ve="3">#Intent;action=android.intent.action.MAIN;category=com.android.launcher3.DEEP_SHORTCUT;launchFlags=0x10200000;package=com.kiwibrowser.browser;component=com.kiwibrowser.browser/com.google.android.apps.chrome.Main;i.profile=0;S.shortcut_id=dynamic-new-incognito-tab-shortcut;end</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>130</code>
+			<Str sr="arg0" ve="3">Send Shortcut Intent With TaskerLauncherShortcut</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Str sr="arg2" ve="3">%shortcut_intent_uri</Str>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3">%result</Str>
+			<Int sr="arg5" val="0"/>
+			<Int sr="arg6" val="0"/>
+			<Str sr="arg7" ve="3"/>
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">%result</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+	</Task>
+	<Task sr="task958">
+		<cdate>1589596274266</cdate>
+		<edate>1589598023811</edate>
+		<id>958</id>
+		<nme>TaskerLauncherShortcut Non DEEP_SHORTCUT Template</nme>
+		<pri>100</pri>
+		<Action sr="act0" ve="7">
+			<code>300</code>
+			<label>A template task to send a Non DEEP_SHORTCUT shortcut intent Uri with TaskerLauncherShortcut plugin. The default value will only work for android less than 7.1 (API 25).
+
+
+This task does not take any parameters or return anything.</label>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>656793780</code>
+			<label>Default: reddit tasker subreddit shortcut</label>
+			<Bundle sr="arg0">
+				<Vals sr="val">
+					<com.agnostic.apollo.taskerlaunchershortcut.extra.INT_VERSION_CODE>1</com.agnostic.apollo.taskerlaunchershortcut.extra.INT_VERSION_CODE>
+					<com.agnostic.apollo.taskerlaunchershortcut.extra.INT_VERSION_CODE-type>java.lang.Integer</com.agnostic.apollo.taskerlaunchershortcut.extra.INT_VERSION_CODE-type>
+					<com.agnostic.apollo.taskerlaunchershortcut.extra.STRING_SHORTCUT_INTENT_URI>reddit://reddit/r/tasker/#Intent;package=com.reddit.frontpage;B.shortcut_is_from_home_screen=true;end</com.agnostic.apollo.taskerlaunchershortcut.extra.STRING_SHORTCUT_INTENT_URI>
+					<com.agnostic.apollo.taskerlaunchershortcut.extra.STRING_SHORTCUT_INTENT_URI-type>java.lang.String</com.agnostic.apollo.taskerlaunchershortcut.extra.STRING_SHORTCUT_INTENT_URI-type>
+					<com.twofortyfouram.locale.intent.extra.BLURB>reddit://reddit/r/tasker/#Intent;package=com.reddit.frontpag</com.twofortyfouram.locale.intent.extra.BLURB>
+					<com.twofortyfouram.locale.intent.extra.BLURB-type>java.lang.String</com.twofortyfouram.locale.intent.extra.BLURB-type>
+					<net.dinglisch.android.tasker.RELEVANT_VARIABLES>&lt;StringArray sr=""&gt;&lt;_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES0&gt;%result_code
+Result Code
+The result code for sending shortcut intent.
+0 for success, otherwise a failure.&lt;/_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES0&gt;&lt;_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES1&gt;%errmsg
+Error Message
+The err message of the action.&lt;/_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES1&gt;&lt;/StringArray&gt;</net.dinglisch.android.tasker.RELEVANT_VARIABLES>
+					<net.dinglisch.android.tasker.RELEVANT_VARIABLES-type>[Ljava.lang.String;</net.dinglisch.android.tasker.RELEVANT_VARIABLES-type>
+					<net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS>com.agnostic.apollo.taskerlaunchershortcut.extra.STRING_SHORTCUT_INTENT_URI</net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS>
+					<net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS-type>java.lang.String</net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS-type>
+					<net.dinglisch.android.tasker.subbundled>true</net.dinglisch.android.tasker.subbundled>
+					<net.dinglisch.android.tasker.subbundled-type>java.lang.Boolean</net.dinglisch.android.tasker.subbundled-type>
+				</Vals>
+			</Bundle>
+			<Str sr="arg1" ve="3">com.agnostic.apollo.taskerlaunchershortcut</Str>
+			<Str sr="arg2" ve="3">com.agnostic.apollo.taskerlaunchershortcut.ui.activity.PluginActivity</Str>
+			<Int sr="arg3" val="10"/>
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%result</Str>
+			<Str sr="arg1" ve="3">%result_code
+%errmsg</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">%result</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+	</Task>
+</TaskerData>
